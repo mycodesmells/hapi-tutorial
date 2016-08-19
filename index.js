@@ -7,31 +7,25 @@ server.connection({
     port: 8000
 });
 
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: (req, res, next) => {
-        console.log('middleware');
-        return next();
-    }
-});
 
 server.route({
-    method: 'GET',
-    path: '/',
+    method: 'POST',
+    path: '/{param}',
     handler: (req, res) => {
-        console.log(req.query);
-        return res('hello world');
+        let query = req.query;
+        let body = req.payload;
+        let params = req.params;
+        return res({query, body, params}).code(200);
     }
 });
 server.route({
-    method: 'GET',
-    path: '/items/{id}',
-    handler: (req, res) => {
-        console.log(req.params);
-        return res('hello world');
-    }
+        method: 'POST',
+        path: '/{param}',
+        handler: (req, res, next) => {
+        return next();
+}
 });
+
 
 server.start((err) => {
     if (err) {
